@@ -1,8 +1,9 @@
 'use client'
 import { LoginFormState } from '@/states/LoginFormState'
 import { useState } from 'react'
+import Link from 'next/link'
 
-export default function LoginPage () {
+export default function LoginPage() {
   const { isModalOpen, turnOff } = LoginFormState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -75,16 +76,20 @@ export default function LoginPage () {
               </button>
               <p className='mt-4 text-sm'>
                 ¿No tienes cuenta?{' '}
-                <a href='/register' className='text-blue-500'>
+                <Link
+                  href='/register'
+                  onClick={closeModal}
+                  className='text-blue-500'
+                >
                   Regístrate
-                </a>
+                </Link>
               </p>
             </form>
 
             {/* Botón de cerrar dentro del card */}
             <button
               onClick={closeModal}
-              className='absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-3xl'
+              className='absolute top-2 right-2 text-gray-500 hover:text-red-700 text-3xl'
             >
               &times;
             </button>
