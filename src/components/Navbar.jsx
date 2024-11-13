@@ -68,9 +68,9 @@ export default function Navbar() {
           value={filters.includedString} // Vinculamos el valor del input con el filtro de búsqueda
           onChange={handleSearchChange} // Actualizamos el filtro cuando cambia el valor
           placeholder='Buscar...'
-          className='w-full px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500'
+          className='w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500'
         />
-        <button className='bg-black text-white px-4 py-3 rounded-r-md'>
+        {/* <button className='bg-black text-white px-4 py-3 rounded-r-md'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -85,7 +85,7 @@ export default function Navbar() {
               d='M11 16a7 7 0 100-14 7 7 0 000 14zM21 21l-4.35-4.35'
             />
           </svg>
-        </button>
+        </button> */}
       </div>
 
       {/* Espacio de inicio de sesión con menú desplegable */}
