@@ -2,7 +2,7 @@
 import { LoginFormState } from '@/states/LoginFormState'
 import { useState } from 'react'
 
-export default function RegisterPage () {
+export default function RegisterPage() {
   const [formData, setFormData] = useState({
     id: '',
     birthdate: '',
