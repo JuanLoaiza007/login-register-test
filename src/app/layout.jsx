@@ -1,6 +1,8 @@
 import './globals.css'
 import LoginModal from '@/components/LoginModal'
 import Navbar from '@/components/Navbar'
+import { FiltersProvider } from '@/contexts/filters'
+import Sidebar from '@/components/Sidebar'
 
 export const metadata = {
   title: 'Next.js',
@@ -11,11 +13,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang='es'>
       <body>
-        <Navbar />
-        <div className='mt-0'>
-          <LoginModal />
-          {children}
-        </div>
+        <FiltersProvider>
+          <Navbar />
+          <Sidebar />
+          <div className='mt-0'>
+            <LoginModal />
+            {children}
+          </div>
+        </FiltersProvider>
       </body>
     </html>
   )

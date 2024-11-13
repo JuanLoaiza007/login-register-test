@@ -1,15 +1,17 @@
 'use client'
 import { useState, useRef } from 'react'
 import Link from 'next/link'
-import { LoginFormState } from '@/states/LoginFormState'
 import { useAppInfoState } from '@/states/AppInfoState'
+import { useSidebarState } from '@/states/SidebarState'
+import { useFilters } from '@/hooks/useFilters'
 
 export default function Navbar() {
   const { companyName } = useAppInfoState()
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const dropdownTimeout = useRef(null)
+  const { isOpen, setIsOpen } = useSidebarState()
 
-  const { turnOn } = LoginFormState()
+  const { filters, setFilters } = useFilters()
 
   const handleMouseEnter = () => {
     clearTimeout(dropdownTimeout.current)
@@ -20,6 +22,14 @@ export default function Navbar() {
     dropdownTimeout.current = setTimeout(() => setDropdownOpen(false), 150)
   }
 
+  // Función para manejar el cambio en el campo de búsqueda
+  const handleSearchChange = (e) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      includedString: e.target.value
+    }))
+  }
+
   return (
     <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md'>
       {/* Logo o nombre de la empresa */}
@@ -28,7 +38,12 @@ export default function Navbar() {
       </div>
 
       {/* Botón de Menú */}
-      <button className='flex items-center space-x-2 text-white hover:text-gray-900 transition mr-6'>
+      <button
+        className='flex items-center space-x-2 text-white hover:text-gray-900 transition mr-6'
+        onClick={() => {
+          setIsOpen(!isOpen)
+        }}
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
@@ -50,6 +65,8 @@ export default function Navbar() {
       <div className='flex items-center flex-grow mr-6'>
         <input
           type='text'
+          value={filters.includedString} // Vinculamos el valor del input con el filtro de búsqueda
+          onChange={handleSearchChange} // Actualizamos el filtro cuando cambia el valor
           placeholder='Buscar...'
           className='w-full px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500'
         />
@@ -82,7 +99,7 @@ export default function Navbar() {
           <div className='absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-2 transition-all duration-200 transform scale-95'>
             <Link
               href='#'
-              onClick={turnOn}
+              onClick={() => {}}
               className='block px-4 py-2 hover:bg-gray-100'
             >
               Iniciar sesión
