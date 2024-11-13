@@ -12,8 +12,10 @@ export default function RootLayout({ children }) {
     <html lang='es'>
       <body>
         <Navbar />
-        <LoginPage />
-        {children}
+        <div className='mt-0'>
+          <LoginPage />
+          {children}
+        </div>
       </body>
     </html>
   )

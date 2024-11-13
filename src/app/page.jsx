@@ -50,17 +50,22 @@ export default function Home() {
       {/* Banner con el producto y fondo de imagen con blur */}
       {currentProduct && (
         <div
-          className='relative w-full h-96 mb-8 bg-cover bg-center'
-          style={{ backgroundImage: `url(${currentProduct.image})` }}
+          className='relative w-full mb-8 bg-cover bg-center'
+          style={{
+            backgroundImage: `url(${currentProduct.image})`,
+            height: '250px' // Reducido el tamaño del banner
+          }}
         >
           <div className='absolute inset-0 bg-black opacity-50' />{' '}
           {/* Fondo negro translúcido */}
           <div className='absolute inset-0 flex justify-center items-center text-center text-white px-4'>
             <div>
-              <h2 className='text-3xl font-bold mb-4'>
+              <h2 className='text-2xl font-bold mb-4 truncate'>
                 {currentProduct.title}
               </h2>
-              <p className='text-xl mb-6'>{currentProduct.description}</p>
+              <p className='text-lg mb-6 line-clamp-2'>
+                {currentProduct.description}
+              </p>
               <button className='bg-orange-500 text-white py-2 px-6 rounded-md'>
                 Ver Producto
               </button>
@@ -72,14 +77,17 @@ export default function Home() {
       {/* Contenedor paginado con productos */}
       <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6'>
         {currentProducts.map((product) => (
-          <div key={product.id} className='bg-white p-4 rounded-md shadow-md'>
+          <div
+            key={product.id}
+            className='bg-white p-4 rounded-md shadow-md h-[350px] overflow-hidden' // Tamaño fijo y truncamiento
+          >
             <img
               src={product.image}
               alt={product.title}
               className='w-full h-48 object-cover rounded-md mb-4'
             />
-            <h3 className='text-lg font-bold'>{product.title}</h3>
-            <p className='text-gray-500'>{product.category}</p>
+            <h3 className='text-lg font-bold truncate'>{product.title}</h3>
+            <p className='text-gray-500 text-sm'>{product.category}</p>
             <p className='text-lg font-semibold mt-2'>{`$${product.price}`}</p>
           </div>
         ))}

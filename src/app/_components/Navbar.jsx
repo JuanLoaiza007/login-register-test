@@ -21,7 +21,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className='flex items-center px-6 py-4 bg-orange-500 shadow-md'>
+    <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md'>
       {/* Logo o nombre de la empresa */}
       <div className='text-xl font-bold text-white mr-6'>
         <Link href='/'>{companyName}</Link>
