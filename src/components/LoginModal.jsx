@@ -3,7 +3,7 @@ import { LoginFormState } from '@/states/LoginFormState'
 import { useState } from 'react'
 import Link from 'next/link'
 
-export default function LoginPage() {
+export default function LoginModal() {
   const { isModalOpen, turnOff } = LoginFormState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

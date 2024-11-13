@@ -1,6 +1,6 @@
 import './globals.css'
-import LoginPage from './login/page'
-import Navbar from './_components/Navbar'
+import LoginModal from '@/components/LoginModal'
+import Navbar from '@/components/Navbar'
 
 export const metadata = {
   title: 'Next.js',
@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <div className='mt-0'>
-          <LoginPage />
+          <LoginModal />
           {children}
         </div>
       </body>

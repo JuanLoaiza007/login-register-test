@@ -1,5 +1,5 @@
 'use client'
-import { LoginFormState } from '@/states/LoginFormState'
+import { LoginFormState  } from '@/states/LoginFormState'
 import { useState } from 'react'
 
 export default function RegisterPage() {
