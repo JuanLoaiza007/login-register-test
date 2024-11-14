@@ -1,5 +1,11 @@
 'use client'
 import { useLoginModalState } from '@/states/LoginFormState'
+import {
+  validateEmail,
+  validatePassword,
+  validateDocument,
+  validatePhone
+} from '@/utils/validations'
 import { useState } from 'react'
 
 export default function RegisterPage() {
@@ -15,20 +21,29 @@ export default function RegisterPage() {
   const { isModalOpen, turnOn } = useLoginModalState()
   const [errors, setErrors] = useState({})
 
-  const minPasswordLength = 10
-  const maxPasswordLength = 14
-
   const validateForm = () => {
     const newErrors = {}
-    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      newErrors.email = 'Formato de correo inválido'
+
+    const emailError = validateEmail(formData.email)
+    if (emailError) {
+      newErrors.email = emailError
     }
-    if (
-      formData.password.length < minPasswordLength ||
-      formData.password.length > maxPasswordLength
-    ) {
-      newErrors.password = `La contraseña debe tener entre ${minPasswordLength} y ${maxPasswordLength} caracteres.`
+
+    const passwordError = validatePassword(formData.password)
+    if (passwordError) {
+      newErrors.password = passwordError
     }
+
+    const documentError = validateDocument(formData.id)
+    if (documentError) {
+      newErrors.id = documentError
+    }
+
+    const phoneError = validatePhone(formData.phone)
+    if (phoneError) {
+      newErrors.phone = phoneError
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -36,6 +51,14 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
+    validateForm()
+  }
+
+  // Función para permitir solo números en campos específicos
+  const handleNumberInput = (e) => {
+    const { name, value } = e.target
+    const numericValue = value.replace(/\D/g, '') // Elimina caracteres no numéricos
+    setFormData((prevData) => ({ ...prevData, [name]: numericValue }))
   }
 
   const handleSubmit = (e) => {
@@ -50,7 +73,7 @@ export default function RegisterPage() {
       <div className='flex items-center justify-center h-screen bg-gray-100'>
         <div className='w-[700px] p-8 bg-white shadow-md rounded-lg'>
           <h2 className='text-2xl font-bold text-center mb-6'>Registrarse</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className='grid grid-cols-2 gap-6'>
               <div>
                 <p className='font-semibold mb-4 text-orange-500'>
@@ -64,9 +87,12 @@ export default function RegisterPage() {
                     type='text'
                     name='id'
                     value={formData.id}
-                    onChange={handleChange}
+                    onChange={handleNumberInput} // Solo permite números
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
+                  {errors.id && (
+                    <p className='text-red-500 text-xs mt-1'>{errors.id}</p>
+                  )}
                 </div>
                 <div className='mb-4'>
                   <label className='block font-semibold mb-1'>
@@ -111,9 +137,12 @@ export default function RegisterPage() {
                     type='text'
                     name='phone'
                     value={formData.phone}
-                    onChange={handleChange}
+                    onChange={handleNumberInput} // Solo permite números
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
+                  {errors.phone && (
+                    <p className='text-red-500 text-xs mt-1'>{errors.phone}</p>
+                  )}
                 </div>
                 <div className='mb-4'>
                   <label className='block font-semibold mb-1'>Correo</label>

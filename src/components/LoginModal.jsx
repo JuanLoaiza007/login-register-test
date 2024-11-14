@@ -1,6 +1,7 @@
 'use client'
 import { useLoginModalState } from '@/states/LoginFormState'
 import { useState } from 'react'
+import { validateEmail, validatePassword } from '@/utils/validations' // Importar las funciones de validación
 import Link from 'next/link'
 
 export default function LoginModal() {
@@ -10,25 +11,21 @@ export default function LoginModal() {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
 
-  const minPasswordLength = 10
-  const maxPasswordLength = 14
-
-  const validateEmail = (value) => {
-    setEmail(value)
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    setEmailError(emailPattern.test(value) ? '' : 'Formato de correo inválido')
-  }
-
-  const validatePassword = (value) => {
-    setPassword(value)
-    setPasswordError(
-      value.length >= minPasswordLength && value.length <= maxPasswordLength
-        ? ''
-        : `La contraseña debe tener entre ${minPasswordLength} y ${maxPasswordLength} caracteres.`
-    )
-  }
-
   const closeModal = () => turnOff()
+
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value
+    setEmail(emailValue)
+    const error = validateEmail(emailValue) // Llamada a la validación de correo
+    setEmailError(error)
+  }
+
+  const handlePasswordChange = (e) => {
+    const passwordValue = e.target.value
+    setPassword(passwordValue)
+    const error = validatePassword(passwordValue) // Llamada a la validación de contraseña
+    setPasswordError(error)
+  }
 
   return (
     <>
@@ -45,7 +42,7 @@ export default function LoginModal() {
                 <input
                   type='email'
                   value={email}
-                  onChange={(e) => validateEmail(e.target.value)}
+                  onChange={handleEmailChange}
                   className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   required
                 />
@@ -59,7 +56,7 @@ export default function LoginModal() {
                 <input
                   type='password'
                   value={password}
-                  onChange={(e) => validatePassword(e.target.value)}
+                  onChange={handlePasswordChange}
                   className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   required
                 />

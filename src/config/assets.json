@@ -1,0 +1,10 @@
+{
+  "ui": {
+    "menu": "/assets/icons/menu.svg",
+    "cart": "/assets/icons/shopping-cart.svg"
+  },
+  "brands": {},
+  "dev": {
+    "test_png": "/assets/test.png"
+  }
+}

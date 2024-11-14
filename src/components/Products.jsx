@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/hooks/useFilters'
-import productsData from '@/mocks/products.json' // Importar los productos mockeados
+import productsData from '../../public/mocks/products.json' // Importar los productos mockeados
 
 export default function Products() {
   const [products, setProducts] = useState([])

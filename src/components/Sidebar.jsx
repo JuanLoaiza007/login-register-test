@@ -1,8 +1,7 @@
-// Sidebar.jsx
 'use client'
 import { useFilters } from '@/hooks/useFilters'
 import { useSidebarState } from '@/states/SidebarState'
-import categoriesData from '@/mocks/categories.json' // Cambié el nombre para claridad
+import categoriesData from '../../public/mocks/categories.json'
 
 export default function Sidebar() {
   const { filters, setFilters } = useFilters()
