@@ -1,10 +1,10 @@
 'use client'
-import { LoginFormState } from '@/states/LoginFormState'
+import { useLoginModalState } from '@/states/LoginFormState'
 import { useState } from 'react'
 import Link from 'next/link'
 
 export default function LoginModal() {
-  const { isModalOpen, turnOff } = LoginFormState()
+  const { isModalOpen, turnOff } = useLoginModalState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [emailError, setEmailError] = useState('')

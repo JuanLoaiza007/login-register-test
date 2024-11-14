@@ -1,5 +1,5 @@
 'use client'
-import { LoginFormState  } from '@/states/LoginFormState'
+import { useLoginModalState } from '@/states/LoginFormState'
 import { useState } from 'react'
 
 export default function RegisterPage() {
@@ -12,8 +12,8 @@ export default function RegisterPage() {
     email: '',
     password: ''
   })
+  const { isModalOpen, turnOn } = useLoginModalState()
   const [errors, setErrors] = useState({})
-  const [isModalOpen, setModalOpen] = useState(false)
 
   const minPasswordLength = 10
   const maxPasswordLength = 14
@@ -42,11 +42,8 @@ export default function RegisterPage() {
     e.preventDefault()
     if (validateForm()) {
       console.log('Formulario válido:', formData)
-      setModalOpen(true) // Abre el modal al enviar el formulario
     }
   }
-
-  const { turnOn } = LoginFormState()
 
   return (
     <div>

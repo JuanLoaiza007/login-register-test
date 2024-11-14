@@ -16,10 +16,8 @@ export default function RootLayout({ children }) {
         <FiltersProvider>
           <Navbar />
           <Sidebar />
-          <div className='mt-0'>
-            <LoginModal />
-            {children}
-          </div>
+          <LoginModal />
+          {children}
         </FiltersProvider>
       </body>
     </html>

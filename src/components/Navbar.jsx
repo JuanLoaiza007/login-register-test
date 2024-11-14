@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { useAppInfoState } from '@/states/AppInfoState'
 import { useSidebarState } from '@/states/SidebarState'
 import { useFilters } from '@/hooks/useFilters'
+import { useLoginModalState } from '@/states/LoginFormState'
 
 export default function Navbar() {
   const { companyName } = useAppInfoState()
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const dropdownTimeout = useRef(null)
+  const { isOpen: isOpenLoginModal, turnOn: turnOnLoginModal } =
+    useLoginModalState()
   const { isOpen, setIsOpen } = useSidebarState()
 
   const { filters, setFilters } = useFilters()
@@ -28,6 +31,12 @@ export default function Navbar() {
       ...prevState,
       includedString: e.target.value
     }))
+  }
+
+  function logout() {
+    return () => {
+      console.log('Cerrando sesión')
+    }
   }
 
   return (
@@ -99,7 +108,9 @@ export default function Navbar() {
           <div className='absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-2 transition-all duration-200 transform scale-95'>
             <Link
               href='#'
-              onClick={() => {}}
+              onClick={() => {
+                turnOnLoginModal()
+              }}
               className='block px-4 py-2 hover:bg-gray-100'
             >
               Iniciar sesión
@@ -110,7 +121,11 @@ export default function Navbar() {
             >
               Registrarse
             </Link>
-            <Link href='/logout' className='block px-4 py-2 hover:bg-gray-100'>
+            <Link
+              href='/'
+              onClick={logout()}
+              className='block px-4 py-2 hover:bg-gray-100'
+            >
               Cerrar Sesión
             </Link>
           </div>
