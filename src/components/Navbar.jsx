@@ -10,6 +10,7 @@ import { useLoginModalState } from '@/states/LoginFormState'
 import { useFilters } from '@/hooks/useFilters'
 
 export default function Navbar() {
+  const pathname = usePathname()
   const { companyName } = useAppInfoState()
   const [isDropdownOpen, setDropdownOpen] = useState(false)
   const dropdownTimeout = useRef(null)
@@ -39,9 +40,6 @@ export default function Navbar() {
       console.log('Cerrando sesión')
     }
   }
-
-  const pathname = usePathname()
-  console.log('pathname', pathname)
 
   return (
     <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md h-16'>
