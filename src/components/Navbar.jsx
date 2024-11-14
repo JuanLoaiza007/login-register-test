@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef } from 'react'
 import { ReactSVG } from 'react-svg'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import ic from '@/config/assets.json'
 import { useAppInfoState } from '@/states/AppInfoState'
@@ -39,41 +40,46 @@ export default function Navbar() {
     }
   }
 
+  const pathname = usePathname()
+  console.log('pathname', pathname)
+
   return (
-    <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md'>
+    <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md h-16'>
       {/* company name */}
       <div className='text-xl font-bold text-white mr-6'>
         <Link href='/'>{companyName}</Link>
       </div>
-
       {/* menu button */}
-      <button
-        className='flex items-center space-x-2 text-white hover:text-gray-900 transition mr-6'
-        onClick={() => {
-          setIsOpen(!isOpen)
-        }}
-      >
-        <ReactSVG
-          className='fill-none text-white hover:text-gray-900 transition'
-          src={ic.ui.menu}
-          alt='menu'
-        />
-      </button>
+      {pathname === '/' && (
+        <>
+          <button
+            className='flex items-center space-x-2 text-white hover:text-gray-900 transition mr-6'
+            onClick={() => {
+              setIsOpen(!isOpen)
+            }}
+          >
+            <ReactSVG
+              className='fill-none text-white hover:text-gray-900 transition'
+              src={ic.ui.menu}
+              alt='menu'
+            />
+          </button>
 
-      {/* search bar */}
-      <div className='flex items-center flex-grow mr-6'>
-        <input
-          type='text'
-          value={filters.includedString}
-          onChange={handleSearchChange}
-          placeholder='Buscar...'
-          className='w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500'
-        />
-      </div>
-
+          {/* search bar */}
+          <div className='flex items-center flex-grow mr-6'>
+            <input
+              type='text'
+              value={filters.includedString}
+              onChange={handleSearchChange}
+              placeholder='Buscar...'
+              className='w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500'
+            />
+          </div>
+        </>
+      )}
       {/* session button */}
       <div
-        className='relative text-white hover:text-gray-900 transition mr-6'
+        className='relative text-white hover:text-gray-900 transition ml-auto mr-6'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -105,7 +111,6 @@ export default function Navbar() {
           </div>
         )}
       </div>
-
       {/* cart button */}
       <div className='mr-6'>
         <Link
