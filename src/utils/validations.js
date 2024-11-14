@@ -49,6 +49,9 @@ export const validatePhone = (value) => {
 }
 
 export const validateName = (value) => {
+  if (!value || value.trim().length === 0) {
+    return 'El nombre no puede estar vacío.'
+  }
   if (value.length > maxNameLength) {
     return `El nombre no puede tener más de ${maxNameLength} caracteres.`
   }
@@ -56,6 +59,9 @@ export const validateName = (value) => {
 }
 
 export const validateLastName = (value) => {
+  if (!value || value.trim().length === 0) {
+    return 'El apellido no puede estar vacío.'
+  }
   if (value.length > maxNameLength) {
     return `El apellido no puede tener más de ${maxNameLength} caracteres.`
   }

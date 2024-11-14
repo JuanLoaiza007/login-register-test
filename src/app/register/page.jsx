@@ -4,7 +4,9 @@ import {
   validateEmail,
   validatePassword,
   validateDocument,
-  validatePhone
+  validatePhone,
+  validateName,
+  validateLastName
 } from '@/utils/validations'
 import { useState } from 'react'
 
@@ -20,6 +22,7 @@ export default function RegisterPage() {
   })
   const { isModalOpen, turnOn } = useLoginModalState()
   const [errors, setErrors] = useState({})
+  const [showErrors, setShowErrors] = useState(false)
 
   const validateForm = () => {
     const newErrors = {}
@@ -44,6 +47,20 @@ export default function RegisterPage() {
       newErrors.phone = phoneError
     }
 
+    const firstNameError = validateName(formData.firstName)
+    if (firstNameError) {
+      newErrors.firstName = firstNameError
+    }
+
+    const lastNameError = validateLastName(formData.lastName)
+    if (lastNameError) {
+      newErrors.lastName = lastNameError
+    }
+
+    if (!formData.birthdate) {
+      newErrors.birthdate = 'La fecha de nacimiento es obligatoria.'
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -51,18 +68,23 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
-    validateForm()
+
+    // Borrar el error de este campo específico al escribir
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
-  // Función para permitir solo números en campos específicos
   const handleNumberInput = (e) => {
     const { name, value } = e.target
     const numericValue = value.replace(/\D/g, '') // Elimina caracteres no numéricos
     setFormData((prevData) => ({ ...prevData, [name]: numericValue }))
+
+    // Borrar el error de este campo específico al escribir
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setShowErrors(true)
     if (validateForm()) {
       console.log('Formulario válido:', formData)
     }
@@ -81,22 +103,23 @@ export default function RegisterPage() {
                 </p>
                 <div className='mb-4'>
                   <label className='block font-semibold mb-1'>
-                    Documento de identidad
+                    Documento de identidad{' '}
+                    <span className='text-red-500'>*</span>
                   </label>
                   <input
                     type='text'
                     name='id'
                     value={formData.id}
-                    onChange={handleNumberInput} // Solo permite números
+                    onChange={handleNumberInput}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
-                  {errors.id && (
+                  {showErrors && errors.id && (
                     <p className='text-red-500 text-xs mt-1'>{errors.id}</p>
                   )}
                 </div>
                 <div className='mb-4'>
                   <label className='block font-semibold mb-1'>
-                    Fecha de nacimiento
+                    Fecha de nacimiento <span className='text-red-500'>*</span>
                   </label>
                   <input
                     type='date'
@@ -105,9 +128,16 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
+                  {showErrors && errors.birthdate && (
+                    <p className='text-red-500 text-xs mt-1'>
+                      {errors.birthdate}
+                    </p>
+                  )}
                 </div>
                 <div className='mb-4'>
-                  <label className='block font-semibold mb-1'>Nombres</label>
+                  <label className='block font-semibold mb-1'>
+                    Nombres <span className='text-red-500'>*</span>
+                  </label>
                   <input
                     type='text'
                     name='firstName'
@@ -115,9 +145,16 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
+                  {showErrors && errors.firstName && (
+                    <p className='text-red-500 text-xs mt-1'>
+                      {errors.firstName}
+                    </p>
+                  )}
                 </div>
                 <div className='mb-4'>
-                  <label className='block font-semibold mb-1'>Apellidos</label>
+                  <label className='block font-semibold mb-1'>
+                    Apellidos <span className='text-red-500'>*</span>
+                  </label>
                   <input
                     type='text'
                     name='lastName'
@@ -125,6 +162,11 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
+                  {showErrors && errors.lastName && (
+                    <p className='text-red-500 text-xs mt-1'>
+                      {errors.lastName}
+                    </p>
+                  )}
                 </div>
               </div>
               <div>
@@ -132,20 +174,24 @@ export default function RegisterPage() {
                   Datos de cuenta
                 </p>
                 <div className='mb-4'>
-                  <label className='block font-semibold mb-1'>Celular</label>
+                  <label className='block font-semibold mb-1'>
+                    Celular <span className='text-red-500'>*</span>
+                  </label>
                   <input
                     type='text'
                     name='phone'
                     value={formData.phone}
-                    onChange={handleNumberInput} // Solo permite números
+                    onChange={handleNumberInput}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
-                  {errors.phone && (
+                  {showErrors && errors.phone && (
                     <p className='text-red-500 text-xs mt-1'>{errors.phone}</p>
                   )}
                 </div>
                 <div className='mb-4'>
-                  <label className='block font-semibold mb-1'>Correo</label>
+                  <label className='block font-semibold mb-1'>
+                    Correo <span className='text-red-500'>*</span>
+                  </label>
                   <input
                     type='email'
                     name='email'
@@ -153,12 +199,14 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
-                  {errors.email && (
+                  {showErrors && errors.email && (
                     <p className='text-red-500 text-xs mt-1'>{errors.email}</p>
                   )}
                 </div>
                 <div className='mb-4'>
-                  <label className='block font-semibold mb-1'>Contraseña</label>
+                  <label className='block font-semibold mb-1'>
+                    Contraseña <span className='text-red-500'>*</span>
+                  </label>
                   <input
                     type='password'
                     name='password'
@@ -166,7 +214,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
                   />
-                  {errors.password && (
+                  {showErrors && errors.password && (
                     <p className='text-red-500 text-xs mt-1'>
                       {errors.password}
                     </p>
