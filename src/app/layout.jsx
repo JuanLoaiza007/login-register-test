@@ -2,7 +2,7 @@ import './globals.css'
 import LoginModal from '@/components/form/LoginModal'
 import Navbar from '@/components/ui/Navbar'
 import { FiltersProvider } from '@/contexts/filters'
-import Sidebar from '@/components/ui/Sidebar'
+import Sidebar from '@/components/ui/sidebar/Sidebar'
 
 export const metadata = {
   title: 'Next.js',
