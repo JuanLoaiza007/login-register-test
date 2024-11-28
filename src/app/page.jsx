@@ -1,9 +1,9 @@
-import Products from '@/components/Products'
+import ProductsGrid from '@/components/products/ProductsGrid'
 
 export default function Home() {
   return (
     <div>
-      <Products />
+      <ProductsGrid />
     </div>
   )
 }

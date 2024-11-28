@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/hooks/useFilters'
-import productsData from '../../public/mocks/products.json' // Importar los productos mockeados
+import productsData from '@/../public/mocks/products.json' // Importar los productos mockeados
 
-export default function Products() {
+export default function ProductsGrid() {
   const [products, setProducts] = useState([])
   const [currentProduct, setCurrentProduct] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)

@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation'
 import { useFilters } from '@/hooks/useFilters'
 import { useSidebarState } from '@/states/SidebarState'
-import categoriesData from '../../public/mocks/categories.json'
+import categoriesData from '@/../public/mocks/categories.json'
 
 export default function Sidebar() {
   const pathname = usePathname()
