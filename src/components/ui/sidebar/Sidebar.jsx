@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 'use client'
 import { usePathname } from 'next/navigation'
 import { useSidebarState } from '@/states/SidebarState'

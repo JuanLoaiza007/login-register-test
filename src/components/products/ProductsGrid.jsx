@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useFilters } from '@/hooks/useFilters'
 import { loadProducts } from '@/libs/api/productsApi'
 import ProductCard from '@/components/products/ProductCard'
+import { PRODUCT_ID } from '@/libs/api/Constants.js'
 
 export default function ProductsGrid() {
   const [products, setProducts] = useState([])
@@ -53,7 +54,7 @@ export default function ProductsGrid() {
       {/* Contenedor paginado con productos filtrados */}
       <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6'>
         {currentProducts.map((product) => (
-          <ProductCard key={product.id} product={product} /> // Usamos el componente ProductCard para cada producto
+          <ProductCard key={product[PRODUCT_ID]} product={product} />
         ))}
       </div>
       {/* Paginación */}
