@@ -42,7 +42,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className='fixed top-0 left-0 w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md h-16'>
+    <nav className='w-full z-50 flex items-center px-6 py-4 bg-orange-500 shadow-md h-16'>
       {/* company name */}
       <div className='text-xl font-bold text-white mr-6'>
         <Link href='/'>{companyName}</Link>
