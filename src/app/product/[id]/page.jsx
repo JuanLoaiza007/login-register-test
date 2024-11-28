@@ -9,6 +9,7 @@ import {
   PRODUCT_DESCRIPTION,
   PRODUCT_PRICE,
   PRODUCT_CATEGORY,
+  PRODUCT_STOCK,
   PRODUCT_THUMBNAIL
 } from '@/libs/api/Constants.js'
 
@@ -71,7 +72,7 @@ export default function ProductPage() {
 
           {/* Disponibilidad del producto */}
           <p className='text-lg mt-4 text-orange-600'>
-            ¡Últimas {product.stock} unidades!
+            ¡Últimas {product[PRODUCT_STOCK]} en stock!
           </p>
 
           {/* Botón de agregar al carrito */}

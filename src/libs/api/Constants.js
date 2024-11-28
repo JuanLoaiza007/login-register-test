@@ -5,6 +5,7 @@ export const PRODUCT_IMAGE = 'image'
 export const PRODUCT_TITLE = 'title'
 export const PRODUCT_DESCRIPTION = 'description'
 export const PRODUCT_PRICE = 'price'
+export const PRODUCT_STOCK = 'stock'
 export const PRODUCT_CATEGORY = 'category'
 
 // Categorías
