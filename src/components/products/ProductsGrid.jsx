@@ -10,7 +10,7 @@ export default function ProductsGrid() {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  const [isLoading, setIsLoading] = useState(false) // Estado para cargar la siguiente página
+  const [isLoading, setIsLoading] = useState(true) // Comienza como true para mostrar el cargador inicialmente
   const productsPerPage = 6
 
   const { filterProducts } = useFilters()
@@ -18,6 +18,7 @@ export default function ProductsGrid() {
   useEffect(() => {
     loadProducts().then((data) => {
       setProducts(data)
+      setIsLoading(false)
     })
   }, []) // Solo se ejecuta una vez al montar el componente
 
@@ -46,7 +47,7 @@ export default function ProductsGrid() {
   }
 
   const handleProductClick = () => {
-    setIsLoading(true) // Activar el cargador
+    setIsLoading(true) // Activar el cargador cuando se hace clic en un producto
   }
 
   return (
