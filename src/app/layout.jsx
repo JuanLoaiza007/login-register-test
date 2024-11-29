@@ -15,6 +15,7 @@ export default function RootLayout({ children }) {
       <body>
         <FiltersProvider>
           <Navbar />
+          {/* TODO: Fix Sidebar overlapping */}
           <Sidebar />
           <LoginModal />
           {children}
