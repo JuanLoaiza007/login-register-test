@@ -4,7 +4,7 @@ import { useFilters } from '@/hooks/useFilters'
 import { loadProducts } from '@/libs/api/productsApi'
 import ProductCard from '@/components/products/ProductCard'
 import { PRODUCT_ID } from '@/libs/api/Constants.js'
-import LoadingOverlay from '../ui/LoadingOverlay'
+import LoadingOverlay from '@/components/ui/LoadingOverlay'
 
 export default function ProductsGrid() {
   const [products, setProducts] = useState([])
@@ -51,11 +51,11 @@ export default function ProductsGrid() {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center min-h-screen bg-gray-100'>
+    <div className='flex flex-col justify-center items-center min-h-full bg-gray-100'>
       {/* Círculo cargando que cubre toda la pantalla */}
       {isLoading && <LoadingOverlay />}
 
-      <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-6'>
+      <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-20'>
         {currentProducts.map((product) => (
           <div key={product[PRODUCT_ID]} onClick={handleProductClick}>
             <ProductCard product={product} />

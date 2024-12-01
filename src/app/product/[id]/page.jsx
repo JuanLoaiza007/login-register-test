@@ -51,7 +51,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div className='flex flex-col min-h-screen bg-gray-100'>
+    <div className='flex flex-col h-full p-20 justify-normal items-center bg-gray-100'>
       <div className='bg-white p-6 rounded-lg shadow-lg flex flex-col lg:flex-row'>
         {/* Imagen del producto */}
         <div className='lg:w-1/2'>
