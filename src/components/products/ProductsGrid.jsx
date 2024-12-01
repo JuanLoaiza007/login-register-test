@@ -10,7 +10,7 @@ export default function ProductsGrid() {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  const [isLoading, setIsLoading] = useState(true) // Comienza como true para mostrar el cargador inicialmente
+  const [isLoading, setIsLoading] = useState(true)
   const productsPerPage = 6
 
   const { filterProducts } = useFilters()
@@ -20,7 +20,7 @@ export default function ProductsGrid() {
       setProducts(data)
       setIsLoading(false)
     })
-  }, []) // Solo se ejecuta una vez al montar el componente
+  }, [])
 
   const filteredProducts = filterProducts(products)
 
@@ -47,7 +47,7 @@ export default function ProductsGrid() {
   }
 
   const handleProductClick = () => {
-    setIsLoading(true) // Activar el cargador cuando se hace clic en un producto
+    setIsLoading(true)
   }
 
   return (
@@ -63,17 +63,32 @@ export default function ProductsGrid() {
         ))}
       </div>
 
-      <div className='flex justify-center items-center mt-8'>
+      <div className='flex justify-center items-center mt-8 space-x-4'>
+        {/* Botón Anterior */}
         <button
-          className='px-4 py-2 bg-orange-500 text-white rounded-md mr-4'
+          className={`px-4 py-2 bg-orange-500 text-white rounded-md transition 
+                      ${
+                        currentPage === 1 || totalPages === 0 ? 'invisible' : ''
+                      }`}
           onClick={() => changePage(currentPage - 1)}
           disabled={currentPage === 1 || totalPages === 0}
         >
           Anterior
         </button>
-        <span className='text-lg'>{`Página ${currentPage} de ${totalPages}`}</span>
+
+        {/* Información de la página */}
+        {totalPages > 0 && (
+          <span className='text-lg'>{`Página ${currentPage} de ${totalPages}`}</span>
+        )}
+
+        {/* Botón Siguiente */}
         <button
-          className='px-4 py-2 bg-orange-500 text-white rounded-md ml-4'
+          className={`px-4 py-2 bg-orange-500 text-white rounded-md transition 
+                      ${
+                        currentPage === totalPages || totalPages === 0
+                          ? 'invisible'
+                          : ''
+                      }`}
           onClick={() => changePage(currentPage + 1)}
           disabled={currentPage === totalPages || totalPages === 0}
         >
