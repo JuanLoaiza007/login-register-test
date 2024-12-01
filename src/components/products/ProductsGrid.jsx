@@ -1,10 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { ReactSVG } from 'react-svg'
 import { useFilters } from '@/hooks/useFilters'
 import { loadProducts } from '@/libs/api/productsApi'
 import ProductCard from '@/components/products/ProductCard'
 import { PRODUCT_ID } from '@/libs/api/Constants.js'
 import LoadingOverlay from '@/components/ui/LoadingOverlay'
+import ic from '@/config/assets.json'
 
 export default function ProductsGrid() {
   const [products, setProducts] = useState([])
@@ -66,24 +68,30 @@ export default function ProductsGrid() {
       <div className='flex justify-center items-center mt-8 space-x-4'>
         {/* Botón Anterior */}
         <button
-          className={`px-4 py-2 bg-orange-500 text-white rounded-md transition 
+          className={`p-2 bg-orange-500 text-white rounded-md transition 
                       ${
                         currentPage === 1 || totalPages === 0 ? 'invisible' : ''
                       }`}
           onClick={() => changePage(currentPage - 1)}
           disabled={currentPage === 1 || totalPages === 0}
         >
-          Anterior
+          <ReactSVG
+            className='fill-none text-white hover:fill-black'
+            src={ic.ui.arrowLeft}
+            alt='arrow-left'
+            width={24}
+            height={24}
+          />
         </button>
 
         {/* Información de la página */}
         {totalPages > 0 && (
-          <span className='text-lg'>{`Página ${currentPage} de ${totalPages}`}</span>
+          <span className='text-lg select-none'>{`Página ${currentPage} de ${totalPages}`}</span>
         )}
 
         {/* Botón Siguiente */}
         <button
-          className={`px-4 py-2 bg-orange-500 text-white rounded-md transition 
+          className={`p-2 bg-orange-500 text-white rounded-md transition 
                       ${
                         currentPage === totalPages || totalPages === 0
                           ? 'invisible'
@@ -92,7 +100,13 @@ export default function ProductsGrid() {
           onClick={() => changePage(currentPage + 1)}
           disabled={currentPage === totalPages || totalPages === 0}
         >
-          Siguiente
+          <ReactSVG
+            className='fill-none text-white hover:fill-black'
+            src={ic.ui.arrowRight}
+            alt='arrow-right'
+            width={24}
+            height={24}
+          />
         </button>
       </div>
     </div>
