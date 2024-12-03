@@ -1,12 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { ReactSVG } from 'react-svg'
-import ic from '@/app/_config/assets.json'
 import { useFilters } from '@/app/_hooks/useFilters'
 import { loadProducts } from '@/app/_api/productsApi'
 import { PRODUCT_ID } from '@/app/_api/Constants.js'
 import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 import ProductCard from '@/app/_components/products/ProductCard'
+import Pagination from '@/app/_components/ui/Pagination'
 
 export default function ProductsGrid() {
   const [products, setProducts] = useState([])
@@ -65,49 +64,13 @@ export default function ProductsGrid() {
         ))}
       </div>
 
-      <div className='flex justify-center items-center mt-8 space-x-4'>
-        {/* Botón Anterior */}
-        <button
-          className={`p-2 bg-orange-500 text-white rounded-md transition 
-                      ${
-                        currentPage === 1 || totalPages === 0 ? 'invisible' : ''
-                      }`}
-          onClick={() => changePage(currentPage - 1)}
-          disabled={currentPage === 1 || totalPages === 0}
-        >
-          <ReactSVG
-            className='fill-none text-white hover:fill-black'
-            src={ic.ui.arrowLeft}
-            alt='arrow-left'
-            width={24}
-            height={24}
-          />
-        </button>
-
-        {/* Información de la página */}
-        {totalPages > 0 && (
-          <span className='text-lg select-none'>{`Página ${currentPage} de ${totalPages}`}</span>
-        )}
-
-        {/* Botón Siguiente */}
-        <button
-          className={`p-2 bg-orange-500 text-white rounded-md transition 
-                      ${
-                        currentPage === totalPages || totalPages === 0
-                          ? 'invisible'
-                          : ''
-                      }`}
-          onClick={() => changePage(currentPage + 1)}
-          disabled={currentPage === totalPages || totalPages === 0}
-        >
-          <ReactSVG
-            className='fill-none text-white hover:fill-black'
-            src={ic.ui.arrowRight}
-            alt='arrow-right'
-            width={24}
-            height={24}
-          />
-        </button>
+      {/* Paginación */}
+      <div className='py-8'>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          changePage={changePage}
+        />
       </div>
     </div>
   )

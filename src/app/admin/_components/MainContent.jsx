@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { ReactSVG } from 'react-svg'
-import ic from '@/app/_config/assets.json'
+import Pagination from '@/app/_components/ui/Pagination' // Importa el componente de paginación
 
 export default function MainContent({ items, ItemComponent }) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -72,53 +71,19 @@ export default function MainContent({ items, ItemComponent }) {
         )}
       </div>
 
-      {/* Controles de paginación */}
+      {/* Paginación */}
       <div className='absolute bottom-0 left-0 w-full p-4 flex justify-between bg-white border-t'>
-        <div className='flex items-center space-x-4'>
-          <button
-            className={`p-2 bg-orange-500 rounded-md ${
-              currentPage === 1 || totalPages === 0
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-orange-700'
-            }`}
-            onClick={() => changePage(currentPage - 1)}
-            disabled={currentPage === 1 || totalPages === 0}
-          >
-            <ReactSVG
-              className='fill-none text-white hover:fill-black'
-              src={ic.ui.arrowLeft}
-              alt='arrow-left'
-              width={24}
-              height={24}
-            />
-          </button>
-          <span className='text-gray-700'>{`Página ${
-            totalPages === 0 ? 0 : currentPage
-          } de ${totalPages}`}</span>
-          <button
-            className={`p-2 bg-orange-500 rounded-md ${
-              currentPage === totalPages || totalPages === 0
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:bg-orange-700'
-            }`}
-            onClick={() => changePage(currentPage + 1)}
-            disabled={currentPage === totalPages || totalPages === 0}
-          >
-            <ReactSVG
-              className='fill-none text-white hover:fill-black'
-              src={ic.ui.arrowRight}
-              alt='arrow-right'
-              width={24}
-              height={24}
-            />
-          </button>
-        </div>
-
-        {/* Botón flotante */}
-        <button className='bg-orange-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-orange-600'>
-          +
-        </button>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          changePage={changePage}
+        />
       </div>
+
+      {/* Botón flotante */}
+      <button className='fixed bottom-6 right-6 bg-orange-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-orange-600'>
+        +
+      </button>
     </div>
   )
 }
