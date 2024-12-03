@@ -4,7 +4,7 @@ import {
   PRODUCT_TITLE,
   PRODUCT_CATEGORY,
   PRODUCT_PRICE
-} from '@/app/api/Constants.js'
+} from '@/app/_api/Constants.js'
 
 export default function ProductCard({ product }) {
   return (

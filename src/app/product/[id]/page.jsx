@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { loadProductById } from '@/app/api/productsApi'
+import { loadProductById } from '@/app/_api/productsApi'
 import {
   PRODUCT_ID,
   PRODUCT_TITLE,
@@ -11,7 +11,7 @@ import {
   PRODUCT_CATEGORY,
   PRODUCT_STOCK,
   PRODUCT_THUMBNAIL
-} from '@/app/api/Constants.js'
+} from '@/app/_api/Constants.js'
 
 export default function ProductPage() {
   const { id } = useParams()

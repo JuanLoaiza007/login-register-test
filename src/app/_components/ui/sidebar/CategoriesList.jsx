@@ -2,12 +2,12 @@
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/app/_hooks/useFilters'
 import { useSidebarState } from '@/app/_states/SidebarState'
-import { loadCategories } from '@/app/api/categoriesApi'
+import { loadCategories } from '@/app/_api/categoriesApi'
 import {
   CATEGORY_ID,
   CATEGORY_NAME,
   CATEGORY_TITLE
-} from '@/app/api/Constants.js'
+} from '@/app/_api/Constants.js'
 
 export default function CategoriesList() {
   const { filters, setFilters } = useFilters()
