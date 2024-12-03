@@ -22,9 +22,10 @@ export default function Navbar() {
   const { isOpen, setIsOpen } = useSidebarState()
 
   const { filters, setFilters } = useFilters()
-  const [authStatus, setAuthStatus] = useState(isAuthenticated())
+  const [authStatus, setAuthStatus] = useState(null) // Inicializar como null
 
   useEffect(() => {
+    // Simula una carga de autenticación, asegúrate de que authStatus se actualice solo después de la hidratación
     setAuthStatus(isAuthenticated())
   }, [])
 
@@ -42,6 +43,10 @@ export default function Navbar() {
       ...prevState,
       includedString: e.target.value
     }))
+  }
+
+  if (authStatus === null) {
+    return null
   }
 
   return (
