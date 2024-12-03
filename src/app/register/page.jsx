@@ -1,4 +1,5 @@
 'use client'
+
 import { useState } from 'react'
 import { useLoginModalState } from '@/app/_states/LoginFormState'
 import {
@@ -9,6 +10,7 @@ import {
   validateName,
   validateLastName
 } from '@/app/_utils/validations'
+import RegisterForm from './components/RegisterForm'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ export default function RegisterPage() {
     email: '',
     password: ''
   })
-  const { isModalOpen, turnOn } = useLoginModalState()
+  const { turnOn } = useLoginModalState()
   const [errors, setErrors] = useState({})
   const [showErrors, setShowErrors] = useState(false)
 
@@ -68,17 +70,13 @@ export default function RegisterPage() {
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prevData) => ({ ...prevData, [name]: value }))
-
-    // Borrar el error de este campo específico al escribir
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
   const handleNumberInput = (e) => {
     const { name, value } = e.target
-    const numericValue = value.replace(/\D/g, '') // Elimina caracteres no numéricos
+    const numericValue = value.replace(/\D/g, '')
     setFormData((prevData) => ({ ...prevData, [name]: numericValue }))
-
-    // Borrar el error de este campo específico al escribir
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
@@ -95,127 +93,13 @@ export default function RegisterPage() {
       <div className='w-2/4 p-8 bg-white shadow-md rounded-lg'>
         <h2 className='text-2xl font-bold text-center mb-6'>Registrarse</h2>
         <form onSubmit={handleSubmit} noValidate>
-          <div className='grid grid-cols-2 gap-6'>
-            <div>
-              <p className='font-semibold mb-4 text-orange-500'>
-                Datos personales
-              </p>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Documento de identidad <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='text'
-                  name='id'
-                  value={formData.id}
-                  onChange={handleNumberInput}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.id && (
-                  <p className='text-red-500 text-xs mt-1'>{errors.id}</p>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Fecha de nacimiento <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='date'
-                  name='birthdate'
-                  value={formData.birthdate}
-                  onChange={handleChange}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.birthdate && (
-                  <p className='text-red-500 text-xs mt-1'>
-                    {errors.birthdate}
-                  </p>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Nombres <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='text'
-                  name='firstName'
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.firstName && (
-                  <p className='text-red-500 text-xs mt-1'>
-                    {errors.firstName}
-                  </p>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Apellidos <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='text'
-                  name='lastName'
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.lastName && (
-                  <p className='text-red-500 text-xs mt-1'>{errors.lastName}</p>
-                )}
-              </div>
-            </div>
-            <div>
-              <p className='font-semibold mb-4 text-orange-500'>
-                Datos de cuenta
-              </p>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Celular <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='text'
-                  name='phone'
-                  value={formData.phone}
-                  onChange={handleNumberInput}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.phone && (
-                  <p className='text-red-500 text-xs mt-1'>{errors.phone}</p>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Correo <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='email'
-                  name='email'
-                  value={formData.email}
-                  onChange={handleChange}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.email && (
-                  <p className='text-red-500 text-xs mt-1'>{errors.email}</p>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block font-semibold mb-1'>
-                  Contraseña <span className='text-red-500'>*</span>
-                </label>
-                <input
-                  type='password'
-                  name='password'
-                  value={formData.password}
-                  onChange={handleChange}
-                  className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none'
-                />
-                {showErrors && errors.password && (
-                  <p className='text-red-500 text-xs mt-1'>{errors.password}</p>
-                )}
-              </div>
-            </div>
-          </div>
+          <RegisterForm
+            formData={formData}
+            handleChange={handleChange}
+            handleNumberInput={handleNumberInput}
+            errors={errors}
+            showErrors={showErrors}
+          />
           <button
             type='submit'
             className='w-full py-2 mt-4 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition'
