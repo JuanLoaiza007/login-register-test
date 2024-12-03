@@ -2,12 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/app/_hooks/useFilters'
 import { useSidebarState } from '@/app/_states/SidebarState'
-import { loadCategories } from '@/app/_api/categoriesApi'
-import {
-  CATEGORY_ID,
-  CATEGORY_NAME,
-  CATEGORY_TITLE
-} from '@/app/_api/Constants.js'
+import { loadCategories } from '@/app/_api/stock'
 
 export default function CategoriesList() {
   const { filters, setFilters } = useFilters()
@@ -34,13 +29,13 @@ export default function CategoriesList() {
       <ul>
         {categories.map((category) => (
           <li
-            key={category[CATEGORY_ID]}
+            key={category.id}
             className={`cursor-pointer ${
-              filters.category === category[CATEGORY_TITLE] ? 'font-bold' : ''
+              filters.category === category.title ? 'font-bold' : ''
             }`}
-            onClick={() => handleCategoryChange(category[CATEGORY_TITLE])}
+            onClick={() => handleCategoryChange(category.title)}
           >
-            {category[CATEGORY_NAME]}
+            {category.name}
           </li>
         ))}
       </ul>

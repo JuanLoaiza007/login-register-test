@@ -2,16 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { loadProductById } from '@/app/_api/productsApi'
-import {
-  PRODUCT_ID,
-  PRODUCT_TITLE,
-  PRODUCT_DESCRIPTION,
-  PRODUCT_PRICE,
-  PRODUCT_CATEGORY,
-  PRODUCT_STOCK,
-  PRODUCT_THUMBNAIL
-} from '@/app/_api/Constants.js'
+import { loadProductById } from '@/app/_api/stock'
 
 export default function ProductPage() {
   const { id } = useParams()
@@ -20,19 +11,18 @@ export default function ProductPage() {
 
   useEffect(() => {
     if (id) {
-      setLoading(true) // Inicia la carga del producto
+      setLoading(true)
       loadProductById(id)
         .then((data) => {
           setProduct(data)
-          setLoading(false) // Termina la carga del producto
+          setLoading(false)
         })
         .catch(() => {
-          setLoading(false) // Si ocurre un error, se deja de mostrar el "loading"
+          setLoading(false)
         })
     }
   }, [id])
 
-  // Si no hay producto aún, mostrar el spinner o un placeholder
   if (loading) {
     return (
       <div className='flex items-center justify-center h-screen bg-gray-100'>
@@ -41,7 +31,6 @@ export default function ProductPage() {
     )
   }
 
-  // Si no existe el producto (por ejemplo, si no se encuentra en la base de datos), manejar el error
   if (!product) {
     return (
       <div className='flex items-center justify-center h-screen bg-gray-100'>
@@ -56,23 +45,21 @@ export default function ProductPage() {
         {/* Imagen del producto */}
         <div className='lg:w-1/2'>
           <img
-            src={product[PRODUCT_THUMBNAIL]}
-            alt={product[PRODUCT_TITLE]}
+            src={product.thumbnail}
+            alt={product.title}
             className='h-auto rounded-lg shadow-md w-full max-w-sm'
           />
         </div>
         {/* Detalles del producto */}
         <div className='mt-6'>
-          <h2 className='text-3xl font-bold text-gray-800'>
-            {product[PRODUCT_TITLE]}
-          </h2>
-          <p className='text-gray-500 mt-2'>{product[PRODUCT_CATEGORY]}</p>
-          <p className='text-xl font-semibold mt-4 text-gray-800'>{`$${product[PRODUCT_PRICE]}`}</p>
-          <p className='mt-4 text-gray-600'>{product[PRODUCT_DESCRIPTION]}</p>
+          <h2 className='text-3xl font-bold text-gray-800'>{product.title}</h2>
+          <p className='text-gray-500 mt-2'>{product.category}</p>
+          <p className='text-xl font-semibold mt-4 text-gray-800'>{`$${product.price}`}</p>
+          <p className='mt-4 text-gray-600'>{product.description}</p>
 
           {/* Disponibilidad del producto */}
           <p className='text-lg mt-4 text-orange-600'>
-            ¡Últimas {product[PRODUCT_STOCK]} en stock!
+            ¡Últimas {product.stock} en stock!
           </p>
 
           {/* Botón de agregar al carrito */}

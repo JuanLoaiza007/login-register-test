@@ -1,8 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useFilters } from '@/app/_hooks/useFilters'
-import { loadProducts } from '@/app/_api/productsApi'
-import { PRODUCT_ID } from '@/app/_api/Constants.js'
+import { loadProducts } from '@/app/_api/stock'
 import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
 import ProductCard from '@/app/_components/products/ProductCard'
 import Pagination from '@/app/_components/ui/Pagination'
@@ -58,7 +57,7 @@ export default function ProductsGrid() {
 
       <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-20'>
         {currentProducts.map((product) => (
-          <div key={product[PRODUCT_ID]} onClick={handleProductClick}>
+          <div key={product.id} onClick={handleProductClick}>
             <ProductCard product={product} />
           </div>
         ))}
