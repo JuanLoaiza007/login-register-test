@@ -3,11 +3,11 @@ import { useState, useRef } from 'react'
 import { ReactSVG } from 'react-svg'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import ic from '@/config/assets.json'
-import { useAppInfoState } from '@/states/AppInfoState'
-import { useSidebarState } from '@/states/SidebarState'
-import { useLoginModalState } from '@/states/LoginFormState'
-import { useFilters } from '@/hooks/useFilters'
+import ic from '@/app/_config/assets.json'
+import { useAppInfoState } from '@/app/_states/AppInfoState'
+import { useSidebarState } from '@/app/_states/SidebarState'
+import { useLoginModalState } from '@/app/_states/LoginFormState'
+import { useFilters } from '@/app/_hooks/useFilters'
 
 export default function Navbar() {
   const pathname = usePathname()

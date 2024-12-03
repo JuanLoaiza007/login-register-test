@@ -1,13 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { useFilters } from '@/hooks/useFilters'
-import { useSidebarState } from '@/states/SidebarState'
-import { loadCategories } from '@/libs/api/categoriesApi'
+import { useFilters } from '@/app/_hooks/useFilters'
+import { useSidebarState } from '@/app/_states/SidebarState'
+import { loadCategories } from '@/app/api/categoriesApi'
 import {
   CATEGORY_ID,
   CATEGORY_NAME,
   CATEGORY_TITLE
-} from '@/libs/api/Constants.js'
+} from '@/app/api/Constants.js'
 
 export default function CategoriesList() {
   const { filters, setFilters } = useFilters()

@@ -1,12 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { ReactSVG } from 'react-svg'
-import { useFilters } from '@/hooks/useFilters'
-import { loadProducts } from '@/libs/api/productsApi'
-import ProductCard from '@/components/products/ProductCard'
-import { PRODUCT_ID } from '@/libs/api/Constants.js'
-import LoadingOverlay from '@/components/ui/LoadingOverlay'
-import ic from '@/config/assets.json'
+import ic from '@/app/_config/assets.json'
+import { useFilters } from '@/app/_hooks/useFilters'
+import { loadProducts } from '@/app/api/productsApi'
+import { PRODUCT_ID } from '@/app/api/Constants.js'
+import LoadingOverlay from '@/app/_components/ui/LoadingOverlay'
+import ProductCard from '@/app/_components/products/ProductCard'
 
 export default function ProductsGrid() {
   const [products, setProducts] = useState([])

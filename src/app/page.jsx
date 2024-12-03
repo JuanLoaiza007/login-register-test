@@ -1,4 +1,4 @@
-import ProductsGrid from '@/components/products/ProductsGrid'
+import ProductsGrid from '@/app/_components/products/ProductsGrid'
 
 export default function Home() {
   return (

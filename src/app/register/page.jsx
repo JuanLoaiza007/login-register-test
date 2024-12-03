@@ -1,5 +1,6 @@
 'use client'
-import { useLoginModalState } from '@/states/LoginFormState'
+import { useState } from 'react'
+import { useLoginModalState } from '@/app/_states/LoginFormState'
 import {
   validateEmail,
   validatePassword,
@@ -7,8 +8,7 @@ import {
   validatePhone,
   validateName,
   validateLastName
-} from '@/utils/validations'
-import { useState } from 'react'
+} from '@/app/_utils/validations'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({

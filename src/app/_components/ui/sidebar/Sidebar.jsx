@@ -1,7 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { useSidebarState } from '@/states/SidebarState'
-import CategoriesList from '@/components/ui/sidebar/CategoriesList'
+import { useSidebarState } from '@/app/_states/SidebarState'
+import CategoriesList from '@/app/_components/ui/sidebar/CategoriesList'
 
 export default function Sidebar() {
   const pathname = usePathname()

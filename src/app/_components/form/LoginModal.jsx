@@ -1,8 +1,8 @@
 'use client'
-import { useLoginModalState } from '@/states/LoginFormState'
 import { useState } from 'react'
-import { validateEmail, validatePassword } from '@/utils/validations' // Importar las funciones de validación
 import Link from 'next/link'
+import { useLoginModalState } from '@/app/_states/LoginFormState'
+import { validateEmail, validatePassword } from '@/app/_utils/validations' // Importar las funciones de validación
 
 export default function LoginModal() {
   const { isModalOpen, turnOff } = useLoginModalState()

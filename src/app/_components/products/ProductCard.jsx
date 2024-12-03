@@ -1,10 +1,10 @@
+import Link from 'next/link'
 import {
   PRODUCT_THUMBNAIL,
   PRODUCT_TITLE,
   PRODUCT_CATEGORY,
   PRODUCT_PRICE
-} from '@/libs/api/Constants.js'
-import Link from 'next/link'
+} from '@/app/api/Constants.js'
 
 export default function ProductCard({ product }) {
   return (
