@@ -28,6 +28,11 @@ export const listBrands = async (token) => {
   return response.data
 }
 
+export const loadBrands = async () => {
+  const module = await import('@/../public/mocks/brands.json')
+  return module.brands
+}
+
 export const listCategories = async (token) => {
   const response = await api.get('/stock/category/list', {
     headers: { Authorization: `Bearer ${token}` }

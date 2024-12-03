@@ -1,10 +1,6 @@
 import MainContent from '@/app/admin/_components/MainContent'
 import AuxiliaryItem from '@/app/admin/auxiliaries/_components/AuxiliaryItem'
-
-const loadAuxiliaries = async () => {
-  const module = await import('@/../public/mocks/auxiliaries.json')
-  return module.auxiliaries
-}
+import { loadAuxiliaries } from '@/app/_api/auth'
 
 export default async function AdminArticlesPage() {
   const auxiliaries = await loadAuxiliaries()

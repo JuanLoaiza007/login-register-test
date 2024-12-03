@@ -29,3 +29,8 @@ export const registerWarehouseAssistant = async (data) => {
   const response = await api.post('/auth/register/warehouse-assistant', data)
   return response.data
 }
+
+export const loadAuxiliaries = async () => {
+  const module = await import('@/../public/mocks/auxiliaries.json')
+  return module.auxiliaries
+}

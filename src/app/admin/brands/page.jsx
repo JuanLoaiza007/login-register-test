@@ -1,10 +1,6 @@
 import MainContent from '@/app/admin/_components/MainContent'
 import BrandItem from '@/app/admin/brands/_components/BrandItem'
-
-const loadBrands = async () => {
-  const module = await import('@/../public/mocks/brands.json')
-  return module.brands
-}
+import { loadBrands } from '@/app/_api/stock'
 
 export default async function AdminBrandsPage() {
   const brands = await loadBrands()

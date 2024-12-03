@@ -1,10 +1,6 @@
 import MainContent from '@/app/admin/_components/MainContent'
 import CategoryItem from '@/app/admin/categories/_components/CategoryItem'
-
-const loadCategories = async () => {
-  const module = await import('@/../public/mocks/categories.json')
-  return module.categories
-}
+import { loadCategories } from '@/app/_api/stock'
 
 export default async function AdminCategoriesPage() {
   const categories = await loadCategories()

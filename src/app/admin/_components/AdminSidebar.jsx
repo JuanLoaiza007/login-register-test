@@ -8,7 +8,7 @@ export default function AdminSidebar() {
   const basePath = '/admin'
   const paths = [
     ['/auxiliaries', 'Auxiliares'],
-    ['/articles', 'Artículos'],
+    ['/products', 'Productos'],
     ['/categories', 'Categorías'],
     ['/brands', 'Marcas']
   ]

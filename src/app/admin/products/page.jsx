@@ -1,12 +1,8 @@
 import MainContent from '@/app/admin/_components/MainContent'
-import ArticleItem from '@/app/admin/articles/_components/ArticleItem'
+import ProductItem from '@/app/admin/products/_components/ProductItem'
+import { loadProducts } from '@/app/_api/stock'
 
-const loadProducts = async () => {
-  const module = await import('@/../public/mocks/products.json')
-  return module.products
-}
-
-export default async function AdminArticlesPage() {
+export default async function AdminProductsPage() {
   const products = await loadProducts()
   const items = products.map((product) => ({
     key: product.id,
@@ -18,7 +14,7 @@ export default async function AdminArticlesPage() {
 
   return (
     <>
-      <MainContent items={items} ItemComponent={ArticleItem} />
+      <MainContent items={items} ItemComponent={ProductItem} />
     </>
   )
 }
