@@ -11,6 +11,7 @@ import {
   validateLastName
 } from '@/app/_utils/validations'
 import RegisterForm from './components/RegisterForm'
+import { registerUser } from '@/app/_api/auth'
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -25,43 +26,32 @@ export default function RegisterPage() {
   const { turnOn } = useLoginModalState()
   const [errors, setErrors] = useState({})
   const [showErrors, setShowErrors] = useState(false)
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
+  const [serverError, setServerError] = useState('')
 
   const validateForm = () => {
     const newErrors = {}
 
     const emailError = validateEmail(formData.email)
-    if (emailError) {
-      newErrors.email = emailError
-    }
+    if (emailError) newErrors.email = emailError
 
     const passwordError = validatePassword(formData.password)
-    if (passwordError) {
-      newErrors.password = passwordError
-    }
+    if (passwordError) newErrors.password = passwordError
 
     const documentError = validateDocument(formData.id)
-    if (documentError) {
-      newErrors.id = documentError
-    }
+    if (documentError) newErrors.id = documentError
 
     const phoneError = validatePhone(formData.phone)
-    if (phoneError) {
-      newErrors.phone = phoneError
-    }
+    if (phoneError) newErrors.phone = phoneError
 
     const firstNameError = validateName(formData.firstName)
-    if (firstNameError) {
-      newErrors.firstName = firstNameError
-    }
+    if (firstNameError) newErrors.firstName = firstNameError
 
     const lastNameError = validateLastName(formData.lastName)
-    if (lastNameError) {
-      newErrors.lastName = lastNameError
-    }
+    if (lastNameError) newErrors.lastName = lastNameError
 
-    if (!formData.birthdate) {
+    if (!formData.birthdate)
       newErrors.birthdate = 'La fecha de nacimiento es obligatoria.'
-    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -80,11 +70,18 @@ export default function RegisterPage() {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setShowErrors(true)
     if (validateForm()) {
-      console.log('Formulario válido:', formData)
+      try {
+        await registerUser(formData)
+        setRegistrationSuccess(true)
+        setServerError('')
+      } catch (error) {
+        setServerError('Error al registrar. Intenta nuevamente.')
+        console.error(error)
+      }
     }
   }
 
@@ -92,6 +89,14 @@ export default function RegisterPage() {
     <div className='flex items-center justify-center h-full bg-gray-100'>
       <div className='w-2/4 p-8 bg-white shadow-md rounded-lg'>
         <h2 className='text-2xl font-bold text-center mb-6'>Registrarse</h2>
+        {registrationSuccess && (
+          <button
+            className='text-white bg-blue-400 text-center my-2 p-2 rounded-md w-full'
+            onClick={turnOn}
+          >
+            Registro exitoso. Inicia sesión aquí.
+          </button>
+        )}
         <form onSubmit={handleSubmit} noValidate>
           <RegisterForm
             formData={formData}
@@ -100,25 +105,23 @@ export default function RegisterPage() {
             errors={errors}
             showErrors={showErrors}
           />
+          {serverError && (
+            <p className='text-red-500 text-center'>{serverError}</p>
+          )}
           <button
             type='submit'
             className='w-full py-2 mt-4 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition'
           >
             Registrarse
           </button>
-          <p className='mt-4 text-center text-sm'>
-            ¿Ya tienes una cuenta?{' '}
-            <button
-              onClick={() => {
-                turnOn()
-                console.log('Abriendo modal de login')
-              }}
-              type='button'
-              className='text-blue-500'
-            >
-              Inicia sesión
-            </button>
-          </p>
+          {!registrationSuccess && (
+            <p className='mt-4 text-center text-sm'>
+              ¿Ya tienes una cuenta?{' '}
+              <button onClick={turnOn} type='button' className='text-blue-500'>
+                Inicia sesión
+              </button>
+            </p>
+          )}
         </form>
       </div>
     </div>

@@ -1,8 +1,10 @@
 'use client'
+
 import { useState } from 'react'
 import Link from 'next/link'
 import { useLoginModalState } from '@/app/_states/LoginFormState'
-import { validateEmail, validatePassword } from '@/app/_utils/validations' // Importar las funciones de validación
+import { validateEmail, validatePassword } from '@/app/_utils/validations'
+import { handleLogin } from '@/app/_utils/handleAuthentication'
 
 export default function LoginModal() {
   const { isModalOpen, turnOff } = useLoginModalState()
@@ -10,21 +12,32 @@ export default function LoginModal() {
   const [password, setPassword] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
+  const [loginError, setLoginError] = useState('')
 
   const closeModal = () => turnOff()
 
   const handleEmailChange = (e) => {
     const emailValue = e.target.value
     setEmail(emailValue)
-    const error = validateEmail(emailValue) // Llamada a la validación de correo
-    setEmailError(error)
+    setEmailError(validateEmail(emailValue))
   }
 
   const handlePasswordChange = (e) => {
     const passwordValue = e.target.value
     setPassword(passwordValue)
-    const error = validatePassword(passwordValue) // Llamada a la validación de contraseña
-    setPasswordError(error)
+    setPasswordError(validatePassword(passwordValue))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (emailError || passwordError || !email || !password) {
+      setLoginError('Por favor, corrige los errores antes de continuar.')
+      return
+    }
+
+    console.log('Esperando autenticacion')
+    await handleLogin(email, password, setLoginError)
+    closeModal()
   }
 
   return (
@@ -32,11 +45,8 @@ export default function LoginModal() {
       {isModalOpen && (
         <div className='fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50'>
           <div className='relative w-[400px] p-8 bg-white shadow-md rounded-lg text-center'>
-            {/* Título del formulario */}
             <h2 className='text-2xl font-bold mb-6'>Iniciar sesión</h2>
-
-            {/* Formulario de login */}
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className='mb-4 text-left'>
                 <label className='block font-semibold mb-1'>Correo</label>
                 <input
@@ -65,6 +75,10 @@ export default function LoginModal() {
                 )}
               </div>
 
+              {loginError && (
+                <p className='text-red-500 text-sm mb-4'>{loginError}</p>
+              )}
+
               <button
                 type='submit'
                 className='w-full py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition'
@@ -82,8 +96,6 @@ export default function LoginModal() {
                 </Link>
               </p>
             </form>
-
-            {/* Botón de cerrar dentro del card */}
             <button
               onClick={closeModal}
               className='absolute top-2 right-2 text-gray-500 hover:text-red-700 text-3xl'

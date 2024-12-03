@@ -1,5 +1,5 @@
 'use client'
-import withAuth from '../_contexts/withAuth'
+import withAuth from '@/app/_utils/withAuth'
 
 const CartPage = () => {
   return (

@@ -1,18 +1,22 @@
 'use client'
+
+import { useEffect, useState } from 'react'
 import { redirect } from 'next/navigation'
-import { useEffect } from 'react'
+import { isAuthenticated } from './handleAuthentication'
 
 export default function withAuth(Component) {
-  const session = true
-
   return function WithAuth(props) {
+    const [isLoading, setIsLoading] = useState(true)
+
     useEffect(() => {
-      if (!session) {
+      if (!isAuthenticated()) {
         redirect('/')
+      } else {
+        setIsLoading(false)
       }
     }, [])
 
-    if (!session) {
+    if (isLoading) {
       return null
     }
 

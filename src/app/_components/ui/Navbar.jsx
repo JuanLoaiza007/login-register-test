@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { ReactSVG } from 'react-svg'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -8,6 +8,10 @@ import { useAppInfoState } from '@/app/_states/AppInfoState'
 import { useSidebarState } from '@/app/_states/SidebarState'
 import { useLoginModalState } from '@/app/_states/LoginFormState'
 import { useFilters } from '@/app/_hooks/useFilters'
+import {
+  isAuthenticated,
+  handleLogout
+} from '@/app/_utils/handleAuthentication'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -18,6 +22,11 @@ export default function Navbar() {
   const { isOpen, setIsOpen } = useSidebarState()
 
   const { filters, setFilters } = useFilters()
+  const [authStatus, setAuthStatus] = useState(isAuthenticated())
+
+  useEffect(() => {
+    setAuthStatus(isAuthenticated())
+  }, [])
 
   const handleMouseEnter = () => {
     clearTimeout(dropdownTimeout.current)
@@ -33,12 +42,6 @@ export default function Navbar() {
       ...prevState,
       includedString: e.target.value
     }))
-  }
-
-  function logout() {
-    return () => {
-      console.log('Cerrando sesión')
-    }
   }
 
   return (
@@ -75,53 +78,60 @@ export default function Navbar() {
           </div>
         </>
       )}
-      {/* session button */}
       <div
         className='relative text-white hover:text-gray-900 transition ml-auto mr-6'
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <p>Hola, Inicia sesión</p>
+        {authStatus ? <p>Hola, Usuario</p> : <p>Hola, Inicia sesión</p>}
         {isDropdownOpen && (
           <div className='absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-2 transition-all duration-200 transform scale-95'>
-            <Link
-              href='#'
-              onClick={() => {
-                turnOnLoginModal()
-              }}
-              className='block px-4 py-2 hover:bg-gray-100'
-            >
-              Iniciar sesión
-            </Link>
-            <Link
-              href='/register'
-              className='block px-4 py-2 hover:bg-gray-100'
-            >
-              Registrarse
-            </Link>
-            <Link
-              href='/'
-              onClick={logout()}
-              className='block px-4 py-2 hover:bg-gray-100'
-            >
-              Cerrar Sesión
-            </Link>
+            {!authStatus && (
+              <>
+                <Link
+                  href='#'
+                  onClick={() => {
+                    turnOnLoginModal()
+                  }}
+                  className='block px-4 py-2 hover:bg-gray-100'
+                >
+                  Iniciar sesión
+                </Link>
+                <Link
+                  href='/register'
+                  className='block px-4 py-2 hover:bg-gray-100'
+                >
+                  Registrarse
+                </Link>
+              </>
+            )}
+            {authStatus && (
+              <Link
+                href='/'
+                onClick={handleLogout()}
+                className='block px-4 py-2 hover:bg-gray-100'
+              >
+                Cerrar Sesión
+              </Link>
+            )}
           </div>
         )}
       </div>
       {/* cart button */}
-      <div className='mr-6'>
-        <Link
-          href='/cart'
-          className='text-white hover:text-gray-900 transition'
-        >
-          <ReactSVG
-            className='text-white fill-none hover:fill-black'
-            src={ic.ui.cart}
-            alt='cart-button'
-          />
-        </Link>
-      </div>
+      {authStatus && (
+        <div className='mr-6'>
+          <Link
+            href='/cart'
+            className='text-white hover:text-gray-900 transition'
+          >
+            <ReactSVG
+              className='text-white fill-none hover:fill-black'
+              src={ic.ui.cart}
+              alt='cart-button'
+            />
+          </Link>
+        </div>
+      )}
     </nav>
   )
 }
