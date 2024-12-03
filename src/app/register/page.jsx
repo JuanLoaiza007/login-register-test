@@ -11,9 +11,10 @@ import {
   validateLastName
 } from '@/app/_utils/validations'
 import RegisterForm from './components/RegisterForm'
+import withoutAuth from '@/app/_utils/withoutAuth'
 import { registerUser } from '@/app/_api/auth'
 
-export default function RegisterPage() {
+function RegisterPage() {
   const [formData, setFormData] = useState({
     id: '',
     birthdate: '',
@@ -75,12 +76,18 @@ export default function RegisterPage() {
     setShowErrors(true)
     if (validateForm()) {
       try {
-        await registerUser(formData)
+        const formattedData = {
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          password: formData.password,
+          role: 'user'
+        }
+        await registerUser(formattedData)
         setRegistrationSuccess(true)
         setServerError('')
       } catch (error) {
-        setServerError('Error al registrar. Intenta nuevamente.')
-        console.error(error)
+        setServerError(error.message)
       }
     }
   }
@@ -127,3 +134,5 @@ export default function RegisterPage() {
     </div>
   )
 }
+
+export default withoutAuth(RegisterPage)

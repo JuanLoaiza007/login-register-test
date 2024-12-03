@@ -11,7 +11,7 @@ export default function withAuth(Component) {
     const router = useRouter()
 
     useEffect(() => {
-      if (!isAuthenticated()) {
+      if (isAuthenticated()) {
         router.push('/')
       } else {
         setIsLoading(false)
