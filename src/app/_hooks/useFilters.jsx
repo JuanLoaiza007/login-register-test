@@ -8,10 +8,10 @@ export function useFilters() {
   const filterProducts = (products) => {
     return products.filter((product) => {
       return (
-        product.title
+        product.name
           .toLowerCase()
           .includes(filters.includedString.toLowerCase()) &&
-        (filters.category === 'all' || product.category === filters.category)
+        (filters.categoryId === -1 || product.categoryId === filters.categoryId)
       )
     })
   }

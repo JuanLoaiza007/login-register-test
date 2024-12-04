@@ -7,10 +7,10 @@ export default function ProductCard({ product }) {
         <img
           src={product.thumbnail}
           className='w-full h-48 object-cover rounded-md mb-4'
-          alt={product.title}
+          alt={product.name}
         />
-        <h3 className='text-lg font-bold truncate'>{product.title}</h3>
-        <p className='text-gray-500 text-sm'>{product.category}</p>
+        <h3 className='text-lg font-bold truncate'>{product.name}</h3>
+        <p className='text-gray-500 text-sm'>{product.categoryId}</p>
         <p className='text-lg font-semibold mt-2'>{`$${product.price}`}</p>
       </div>
     </Link>

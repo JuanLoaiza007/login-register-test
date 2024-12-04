@@ -1,33 +1,23 @@
 {
   "categories": [
     {
-      "id": 1,
-      "title": "all",
-      "name": "Todas",
-      "description": "Todas las categorias"
-    },
-    {
       "id": 2,
-      "title": "beauty",
-      "name": "Belleza",
+      "name": "beauty",
       "description": "Productos relacionados con la belleza"
     },
     {
       "id": 3,
-      "title": "groceries",
-      "name": "Mercado",
+      "name": "groceries",
       "description": "Productos relacionados con el mercado"
     },
     {
       "id": 4,
-      "title": "furniture",
-      "name": "Amueblados",
+      "name": "furniture",
       "description": "Productos relacionados con el hogar"
     },
     {
       "id": 5,
-      "title": "fragrances",
-      "name": "Fragancias",
+      "name": "fragrances",
       "description": "Productos relacionados con lociones"
     }
   ]

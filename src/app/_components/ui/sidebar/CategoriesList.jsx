@@ -11,14 +11,19 @@ export default function CategoriesList() {
 
   useEffect(() => {
     loadCategories().then((categories) => {
-      setCategories(categories)
+      const allCategory = {
+        id: -1,
+        name: 'all',
+        description: 'all'
+      }
+      setCategories([allCategory, ...categories])
     })
   }, [])
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (categoryId) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      category
+      categoryId
     }))
     setIsOpen(false)
   }
@@ -31,9 +36,9 @@ export default function CategoriesList() {
           <li
             key={category.id}
             className={`cursor-pointer ${
-              filters.category === category.title ? 'font-bold' : ''
+              filters.category === category.name ? 'font-bold' : ''
             }`}
-            onClick={() => handleCategoryChange(category.title)}
+            onClick={() => handleCategoryChange(category.id)}
           >
             {category.name}
           </li>

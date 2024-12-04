@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 // 1. Crear contexto, este es el que se consume.
 export const FiltersContext = createContext()
@@ -8,8 +8,12 @@ export const FiltersContext = createContext()
 export function FiltersProvider({ children }) {
   const [filters, setFilters] = useState({
     includedString: '',
-    category: 'all'
+    categoryId: -1
   })
+
+  useEffect(() => {
+    console.log('filters', filters)
+  }, [filters])
 
   return (
     <FiltersContext.Provider value={{ filters, setFilters }}>

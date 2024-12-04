@@ -1,14 +1,20 @@
 import { api } from '@/app/_utils/api'
+import {
+  transformLoginResponse,
+  transformRegisterUserResponse,
+  transformRegisterWarehouseAssistantResponse,
+  transformLoadAuxiliariesResponse
+} from '@/app/_utils/transformers/authTransformers'
 
 export const login = async (data) => {
   const response = await api.post('/auth/login', data)
-  return response.data
+  return transformLoginResponse(response.data)
 }
 
 export const registerUser = async (data) => {
   try {
     const response = await api.post('/auth/register/user', data)
-    return response.data
+    return transformRegisterUserResponse(response.data)
   } catch (error) {
     if (error.response && error.response.data && error.response.data.detail) {
       const errorMessage = JSON.parse(error.response.data.detail)
@@ -27,10 +33,10 @@ export const registerUser = async (data) => {
 
 export const registerWarehouseAssistant = async (data) => {
   const response = await api.post('/auth/register/warehouse-assistant', data)
-  return response.data
+  return transformRegisterWarehouseAssistantResponse(response.data)
 }
 
 export const loadAuxiliaries = async () => {
   const module = await import('@/../public/mocks/auxiliaries.json')
-  return module.auxiliaries
+  return transformLoadAuxiliariesResponse(module.auxiliaries)
 }

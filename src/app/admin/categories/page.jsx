@@ -3,13 +3,7 @@ import CategoryItem from '@/app/admin/categories/_components/CategoryItem'
 import { loadCategories } from '@/app/_api/stock'
 
 export default async function AdminCategoriesPage() {
-  const categories = await loadCategories()
-  const items = categories.map((category) => ({
-    key: category.id,
-    title: category.title,
-    name: category.name,
-    description: category.description
-  }))
+  const items = await loadCategories()
 
   return (
     <>
