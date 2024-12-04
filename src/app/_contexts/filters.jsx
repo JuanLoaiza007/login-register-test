@@ -11,10 +11,6 @@ export function FiltersProvider({ children }) {
     categoryId: -1
   })
 
-  useEffect(() => {
-    console.log('filters', filters)
-  }, [filters])
-
   return (
     <FiltersContext.Provider value={{ filters, setFilters }}>
       {children}

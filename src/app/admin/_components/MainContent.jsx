@@ -64,7 +64,7 @@ export default function MainContent({ items, ItemComponent }) {
       <div className='space-y-4'>
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <ItemComponent key={item.key} item={item} />
+            <ItemComponent key={item.id} item={item} />
           ))
         ) : (
           <p className='text-gray-500'>No se encontraron resultados.</p>

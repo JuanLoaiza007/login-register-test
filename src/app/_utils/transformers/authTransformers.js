@@ -24,7 +24,7 @@ export const transformRegisterWarehouseAssistantResponse = (responseData) => {
 
 export const transformLoadAuxiliariesResponse = (auxiliaryData) => {
   return auxiliaryData.map((auxiliary) => ({
-    key: auxiliary.key,
+    id: auxiliary.id,
     firstName: auxiliary.first_name,
     lastName: auxiliary.last_name,
     email: auxiliary.email
